@@ -19,6 +19,7 @@ class SupportController {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController hourController = TextEditingController();
   final TextEditingController timeLapseController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
 
   String? errorMessage;
 
@@ -27,13 +28,15 @@ class SupportController {
     descriptionController.dispose();
     hourController.dispose();
     timeLapseController.dispose();
+    titleController.dispose();
   }
 
   bool validate() {
     if (userController.text.isEmpty ||
         descriptionController.text.isEmpty ||
         hourController.text.isEmpty ||
-        timeLapseController.text.isEmpty) {
+        timeLapseController.text.isEmpty ||
+        titleController.text.isEmpty) {
       errorMessage = 'Please fill in all fields';
       return false;
     }
