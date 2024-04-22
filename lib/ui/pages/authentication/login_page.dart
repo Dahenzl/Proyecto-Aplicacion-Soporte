@@ -42,20 +42,24 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(20),
-              color: Colors.blue,
-              child: const Text(
-                "SupportTech",
-                // White color for the text
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                )
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.blue,
               ),
-            ),
-            const Icon(
-              Icons.person,
-              size: 100,
-              color: Colors.blue,
+              child: const Column(
+                children: [
+                  Text("SupportTech",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                      )),
+                  Icon(
+                    Icons.support_agent,
+                    size: 50,
+                    color: Colors.white,
+                  )
+                ],
+              ),
             ),
             const SizedBox(
               height: 50,
@@ -71,44 +75,55 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Login with email",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: controllerEmail,
-                        decoration:
-                            const InputDecoration(labelText: "Email address"),
-                        validator: (String? value) {
-                          if (value!.isEmpty) {
-                            return "Enter email";
-                          } else if (!value.contains('@')) {
-                            return "Enter valid email address";
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        controller: controllerPassword,
-                        decoration:
-                            const InputDecoration(labelText: "Password"),
-                        keyboardType: TextInputType.number,
-                        obscureText: true,
-                        validator: (String? value) {
-                          if (value!.isEmpty) {
-                            return "Enter password";
-                          } else if (value.length < 6) {
-                            return "Password should have at least 6 characters";
-                          }
-                          return null;
-                        },
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: const EdgeInsets.all(40),
+                        child: Column(
+                          children: [
+                            const Text(
+                              "Login with email",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              keyboardType: TextInputType.emailAddress,
+                              controller: controllerEmail,
+                              decoration: const InputDecoration(
+                                  labelText: "Email address"),
+                              validator: (String? value) {
+                                if (value!.isEmpty) {
+                                  return "Enter email";
+                                } else if (!value.contains('@')) {
+                                  return "Enter valid email address";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              controller: controllerPassword,
+                              decoration:
+                                  const InputDecoration(labelText: "Password"),
+                              keyboardType: TextInputType.number,
+                              obscureText: true,
+                              validator: (String? value) {
+                                if (value!.isEmpty) {
+                                  return "Enter password";
+                                } else if (value.length < 6) {
+                                  return "Password should have at least 6 characters";
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 50,
@@ -124,6 +139,15 @@ class _LoginPageState extends State<LoginPage> {
                                   controllerPassword.text);
                             }
                           },
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 40),
+                          ),
                           child: const Text("Submit")),
                     ]),
               ),
