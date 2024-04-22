@@ -3,6 +3,7 @@ import "package:get/get.dart";
 import "package:loggy/loggy.dart";
 import "package:proyecto_aplicacion_soporte/ui/pages/coordinator/clients/clients_menu.dart";
 import "package:proyecto_aplicacion_soporte/ui/pages/coordinator/support/supports_menu.dart";
+import "package:proyecto_aplicacion_soporte/ui/pages/coordinator/reports/reports_menu.dart";
 
 class CoordinatorMain extends StatelessWidget {
   final String email;
@@ -59,6 +60,23 @@ class CoordinatorMain extends StatelessWidget {
                 Get.to(() => const SupportsMenu());
               },
               child: const Text("Support List"),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                textStyle: const TextStyle(fontSize: 25),
+              ),
+              onPressed: () {
+                logInfo("Going to Report List");
+                Get.to(() => const ReportsMenu());
+              },
+              child: const Text("Report List"),
             ),
           ],
         ),
