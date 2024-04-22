@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:drop_down_list/drop_down_list.dart';
+import 'package:get/get.dart';
 import 'package:drop_down_list/model/selected_list_item.dart';
-import 'controller.dart';
+import '../../../controller/support_controller.dart';
 
-class EnviarReportes extends StatefulWidget {
-  const EnviarReportes({Key? key}) : super(key: key);
+class SendReports extends StatefulWidget {
+  const SendReports({Key? key}) : super(key: key);
 
   @override
-  _EnviarReportesState createState() => _EnviarReportesState();
+  _SendReportsState createState() => _SendReportsState();
 }
 
-class _EnviarReportesState extends State<EnviarReportes> {
-  final EnviarReportesController _controller = EnviarReportesController();
+class _SendReportsState extends State<SendReports> {
+  final SupportController _controller = SupportController();
 
   @override
   void dispose() {
@@ -23,7 +24,7 @@ class _EnviarReportesState extends State<EnviarReportes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Enviar Reporte"),
+        title: const Text("Send Report"),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
@@ -33,13 +34,13 @@ class _EnviarReportesState extends State<EnviarReportes> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 30.0),
-            _buildTextField('Cliente', 'Seleccione un cliente', _controller.userController, true),
+            _buildTextField('Client', 'Select a client', _controller.userController, true),
             const SizedBox(height: 20.0),
-            _buildTextField('Descripción', 'Ingrese la descripción', _controller.descriptionController, false, maxLines: 5),
+            _buildTextField('Description', 'Enter the description', _controller.descriptionController, false, maxLines: 5),
             const SizedBox(height: 20.0),
-            _buildTextField('Hora', 'Ingrese la hora (0-23)', _controller.hourController, false),
+            _buildTextField('Hour', 'Enter the hour (0-23)', _controller.hourController, false),
             const SizedBox(height: 20.0),
-            _buildTextField('Duración', 'Ingrese la duración (minutos)', _controller.timeLapseController, false),
+            _buildTextField('Duration', 'Enter the duration (minutes)', _controller.timeLapseController, false),
             const SizedBox(height: 20.0),
             if (_controller.errorMessage != null)
               Text(
@@ -52,20 +53,19 @@ class _EnviarReportesState extends State<EnviarReportes> {
                 onPressed: () {
                   if (_controller.validate()) {
                     _controller.submitData();
+                    Get.back();
                   }
                 },
-                child: Text('Enviar'),
+                child: Text('Send'),
                 style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
-                padding:
+                  padding:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                textStyle: const TextStyle(fontSize: 25),
-              ),
-
-
+                  textStyle: const TextStyle(fontSize: 25),
+                ),
               ),
             ),
           ],
@@ -118,14 +118,14 @@ class _EnviarReportesState extends State<EnviarReportes> {
       DropDown(
         isDismissible: true,
         bottomSheetTitle: const Text(
-          'Usuarios',
+          'Users',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
           ),
         ),
         submitButtonChild: const Text(
-          'Listo',
+          'Done',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,

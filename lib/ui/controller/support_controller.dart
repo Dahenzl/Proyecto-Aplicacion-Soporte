@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:drop_down_list/model/selected_list_item.dart';
 
-class EnviarReportesController {
+class SupportController {
   final List<SelectedListItem> listOfUsers = [
     SelectedListItem(value: "1", name: 'John'),
     SelectedListItem(value: "2", name: 'Alice'),
@@ -34,19 +34,19 @@ class EnviarReportesController {
         descriptionController.text.isEmpty ||
         hourController.text.isEmpty ||
         timeLapseController.text.isEmpty) {
-      errorMessage = 'Por favor complete todos los campos';
+      errorMessage = 'Please fill in all fields';
       return false;
     }
 
     final hour = int.tryParse(hourController.text);
     if (hour == null || hour < 0 || hour > 23) {
-      errorMessage = 'La hora debe estar entre 0 y 23';
+      errorMessage = 'Hour must be between 0 and 23';
       return false;
     }
 
     final timeLapse = int.tryParse(timeLapseController.text);
-    if (timeLapse == null) {
-      errorMessage = 'La duración debe ser un número entero';
+    if (timeLapse == null || timeLapse <= 0) {
+      errorMessage = 'Duration must be a positive integer';
       return false;
     }
 
