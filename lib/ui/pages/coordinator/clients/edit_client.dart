@@ -24,6 +24,16 @@ class _EditClientState extends State<EditClient> {
     return Scaffold(
       appBar: AppBar(
         title: Text("${client.firstName} ${client.lastName}"),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await coordinatorController.deleteClient(client.id);
+                Get.back();
+              },
+              icon: const Icon(Icons.delete)),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -73,6 +83,9 @@ class _EditClientState extends State<EditClient> {
                                 lastName: controllerLastName.text));
                             Get.back();
                           },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white),
                           child: const Text("Update")))
                 ],
               ),

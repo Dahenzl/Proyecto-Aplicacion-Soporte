@@ -23,6 +23,7 @@ class _ClientsMenuState extends State<ClientsMenu> {
       appBar: AppBar(
         title: const Text("Clients List"),
         backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       body: Center(child: _getXlistView()),
       floatingActionButton: FloatingActionButton(
@@ -30,6 +31,8 @@ class _ClientsMenuState extends State<ClientsMenu> {
           logInfo("Add user from UI");
           Get.to(() => const CreateClient());
         },
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),
     );
@@ -41,30 +44,15 @@ class _ClientsMenuState extends State<ClientsMenu> {
         itemCount: coordinatorController.clients.length,
         itemBuilder: (context, index) {
           Client user = coordinatorController.clients[index];
-          return Dismissible(
+          return Card(
             key: UniqueKey(),
-            background: Container(
-                color: Colors.red,
-                alignment: Alignment.centerLeft,
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: Text(
-                    "Deleting",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                )),
-            onDismissed: (direction) {
-              coordinatorController.deleteClient(user.id);
-            },
-            child: Card(
-              child: ListTile(
-                title: Text("${user.firstName} ${user.lastName}"),
-                subtitle: Text(user.email),
-                onTap: () {
-                  Get.to(() => const EditClient(),
-                      arguments: [user, user.id]);
-                },
-              ),
+            child: ListTile(
+              title: Text("${user.firstName} ${user.lastName}"),
+              subtitle: Text(user.email),
+              onTap: () {
+                Get.to(() => const EditClient(),
+                    arguments: [user, user.id]);
+              },
             ),
           );
         },

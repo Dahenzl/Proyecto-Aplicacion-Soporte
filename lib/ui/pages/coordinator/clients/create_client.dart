@@ -21,6 +21,8 @@ class _CreateClientState extends State<CreateClient> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('New User'),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -69,6 +71,9 @@ class _CreateClientState extends State<CreateClient> {
                                 controllerEmail.text);
                             Get.back();
                           },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white), 
                           child: const Text("Save")))
                 ],
               ),

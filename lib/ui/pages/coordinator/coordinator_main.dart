@@ -13,14 +13,36 @@ class CoordinatorMain extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Coordinator Page"),
         backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            logInfo("Going to Clients List");
-            Get.to(() => const ClientsMenu());
-          },
-          child: const Text("Clients List"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Welcome Back Coordinator ${email[0].capitalize}!",
+                style: const TextStyle(fontSize: 30)),
+            const SizedBox(height: 20),
+            const Icon(Icons.supervised_user_circle,
+                size: 200, color: Colors.blue),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                textStyle: const TextStyle(fontSize: 25),
+              ),
+              onPressed: () {
+                logInfo("Going to Clients List");
+                Get.to(() => const ClientsMenu());
+              },
+              child: const Text("Clients List"),
+            ),
+          ],
         ),
       ),
     );
