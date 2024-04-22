@@ -28,53 +28,65 @@ class _SendReportsState extends State<SendReports> {
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 30.0),
-            _buildTextField('Client', 'Select a client', _controller.userController, true),
-            const SizedBox(height: 20.0),
-            _buildTextField('Description', 'Enter the description', _controller.descriptionController, false, maxLines: 5),
-            const SizedBox(height: 20.0),
-            _buildTextField('Hour', 'Enter the hour (0-23)', _controller.hourController, false),
-            const SizedBox(height: 20.0),
-            _buildTextField('Duration', 'Enter the duration (minutes)', _controller.timeLapseController, false),
-            const SizedBox(height: 20.0),
-            if (_controller.errorMessage != null)
-              Text(
-                _controller.errorMessage!,
-                style: TextStyle(color: Colors.red),
-              ),
-            const SizedBox(height: 20.0),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_controller.validate()) {
-                    _controller.submitData();
-                    Get.back();
-                  }
-                },
-                child: Text('Send'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                  padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                  textStyle: const TextStyle(fontSize: 25),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20.0),
+              _buildTextField('Client', 'Select a client',
+                  _controller.userController, true),
+              const SizedBox(height: 20.0),
+              _buildTextField('Title', 'Enter the title',
+                  _controller.titleController, false),
+              const SizedBox(height: 20.0),
+              _buildTextField('Description', 'Enter the description',
+                  _controller.descriptionController, false,
+                  maxLines: 5),
+              const SizedBox(height: 20.0),
+              _buildTextField('Hour', 'Enter the hour (0-23)',
+                  _controller.hourController, false),
+              const SizedBox(height: 20.0),
+              _buildTextField('Duration', 'Enter the duration (minutes)',
+                  _controller.timeLapseController, false),
+              const SizedBox(height: 20.0),
+              if (_controller.errorMessage != null)
+                Text(
+                  _controller.errorMessage!,
+                  style: TextStyle(color: Colors.red),
+                ),
+              const SizedBox(height: 20.0),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_controller.validate()) {
+                      _controller.submitData();
+                      Get.back();
+                    }
+                  },
+                  child: Text('Send'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 30),
+                    textStyle: const TextStyle(fontSize: 25),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildTextField(String title, String hint, TextEditingController controller, bool isDropDown, {int maxLines = 1}) {
+  Widget _buildTextField(String title, String hint,
+      TextEditingController controller, bool isDropDown,
+      {int maxLines = 1}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,7 +108,8 @@ class _SendReportsState extends State<SendReports> {
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.black12,
-            contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0), // Adjust padding here
+            contentPadding: const EdgeInsets.symmetric(
+                vertical: 10.0, horizontal: 15.0), // Adjust padding here
             hintText: hint,
             border: const OutlineInputBorder(
               borderSide: BorderSide(
