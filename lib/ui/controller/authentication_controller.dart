@@ -18,7 +18,7 @@ class AuthenticationController extends GetxController {
         errorMessage.value = '';
         Get.to(
             () => CoordinatorMain(email: email)); // Limpiar mensaje de error
-      } else if (email == 'c@c.com' && password == '123456') {
+      } else if (email == 'c@a.com' && password == '123456') {
         logged.value = true;
         errorMessage.value = ''; // Limpiar mensaje de error
         Get.to(
