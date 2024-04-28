@@ -41,7 +41,7 @@ class _SupportsMenuState extends State<SupportsMenu> {
       () => ListView.builder(
         itemCount: coordinatorController.supports.length,
         itemBuilder: (context, index) {
-          Support support = coordinatorController.supports[index];
+          SupportUser support = coordinatorController.supports[index];
           return Card(
             key: UniqueKey(),
             child: ListTile(

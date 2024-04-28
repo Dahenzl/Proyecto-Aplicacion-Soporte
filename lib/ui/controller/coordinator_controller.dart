@@ -1,6 +1,16 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
+import '../../domain/models/client.dart';
+import '../../domain/models/report.dart';
+import '../../domain/models/support_user.dart';
+
+import '../../domain/use_case/client_usecase.dart';
+import '../../domain/use_case/report_usecase.dart';
+import '../../domain/use_case/support_user_usecase.dart';
+
+
+
 class CoordinatorController extends GetxController {
   final RxList<Client> _clients = <Client>[
     Client(
@@ -20,14 +30,14 @@ class CoordinatorController extends GetxController {
         email: 'alice.smith@example.com'),
   ].obs;
 
-  final RxList<Support> _supports = <Support>[
-    Support(
+  final RxList<SupportUser> _supports = <SupportUser>[
+    SupportUser(
         id: 1,
         firstName: 'John',
         lastName: 'Doe',
         email: 'jhon.doe@example.com',
         password: '123456'),
-    Support(
+    SupportUser(
         id: 2,
         firstName: 'Jane',
         lastName: 'Doe',
@@ -49,7 +59,7 @@ class CoordinatorController extends GetxController {
         lastName: 'Pérez',
         email: 'juan.perez@example.com',
       ),
-      support: Support(
+      support: SupportUser(
         id: 1,
         firstName: 'John',
         lastName: 'Doe',
@@ -70,7 +80,7 @@ class CoordinatorController extends GetxController {
         lastName: 'González',
         email: 'maria.gonzalez@example.com',
       ),
-      support: Support(
+      support: SupportUser(
           id: 2,
           firstName: 'Jane',
           lastName: 'Doe',
@@ -90,7 +100,7 @@ class CoordinatorController extends GetxController {
           lastName: 'López',
           email: 'carlos.lopez@example.com',
         ),
-        support: Support(
+        support: SupportUser(
             id: 1,
             firstName: 'John',
             lastName: 'Doe',
@@ -99,7 +109,7 @@ class CoordinatorController extends GetxController {
   ];
 
   List<Client> get clients => _clients;
-  List<Support> get supports => _supports;
+  List<SupportUser> get supports => _supports;
   List<Report> get reports => _reports;
 
   addClient(String firstName, String lastName, String email) {
@@ -112,7 +122,7 @@ class CoordinatorController extends GetxController {
   addSupport(String firstName, String lastName, String email, String password) {
     logInfo("Add support");
     int newId = _supports.isNotEmpty ? _supports.last.id + 1 : 1;
-    _supports.add(Support(
+    _supports.add(SupportUser(
         id: newId,
         firstName: firstName,
         lastName: lastName,
@@ -128,7 +138,7 @@ class CoordinatorController extends GetxController {
     }
   }
 
-  updateSupport(Support support) {
+  updateSupport(SupportUser support) {
     logInfo("Update support");
     int index = _supports.indexWhere((s) => s.id == support.id);
     if (index != -1) {
@@ -164,7 +174,7 @@ class CoordinatorController extends GetxController {
 
   reorganizeIdsSupport() {
     for (int i = 0; i < _supports.length; i++) {
-      _supports[i] = Support(
+      _supports[i] = SupportUser(
           id: i + 1,
           firstName: _supports[i].firstName,
           lastName: _supports[i].lastName,
@@ -197,14 +207,14 @@ class Client {
       required this.email});
 }
 
-class Support {
+class SupportUser {
   final int id;
   final String firstName;
   final String lastName;
   final String email;
   final String password;
 
-  Support(
+  SupportUser(
       {required this.id,
       required this.firstName,
       required this.lastName,
@@ -215,7 +225,7 @@ class Support {
 class Report {
   final int id;
   final Client client;
-  final Support support;
+  final SupportUser support;
   final String title;
   final String description;
   final DateTime date;

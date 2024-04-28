@@ -10,7 +10,7 @@ class EditSupport extends StatefulWidget {
 }
 
 class _EditSupportState extends State<EditSupport> {
-  Support support = Get.arguments[0];
+  SupportUser support = Get.arguments[0];
   final controllerFirstName = TextEditingController();
   final controllerLastName = TextEditingController();
   final controllerEmail = TextEditingController();
@@ -131,7 +131,7 @@ class _EditSupportState extends State<EditSupport> {
                         child: ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                await coordinatorController.updateSupport(Support(
+                                await coordinatorController.updateSupport(SupportUser(
                                     id: support.id,
                                     email: controllerEmail.text,
                                     firstName: controllerFirstName.text,

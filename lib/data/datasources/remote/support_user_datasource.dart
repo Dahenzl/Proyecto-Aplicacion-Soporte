@@ -23,7 +23,7 @@ class SupportUserDataSource {
     }
   }
 
-  Future<bool> addSupportUsers(SupportUser supportUser) async {
+  Future<bool> addSupportUser(SupportUser supportUser) async {
     logInfo("Web service: Adding support user...");
 
     final requestUri = Uri.parse("https://retoolapi.dev/tRq1YZ/support");
@@ -78,10 +78,10 @@ class SupportUserDataSource {
 
     if (response.statusCode == 200) {
       logInfo("Web service: Support user deleted successfully.");
-      return true;
+      return Future.value(true);
     } else {
       logError("Failed to delete support user: ${response.statusCode}");
-      return false;
+      return Future.value(false);
     }
   }
 
