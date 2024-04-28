@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller.dart';
 
+import '../../../../domain/models/client.dart';
+
 class EditClient extends StatefulWidget {
   const EditClient({super.key});
 

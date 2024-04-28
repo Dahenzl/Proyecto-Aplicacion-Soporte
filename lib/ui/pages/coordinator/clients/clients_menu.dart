@@ -5,6 +5,8 @@ import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller
 import 'package:proyecto_aplicacion_soporte/ui/pages/coordinator/clients/create_client.dart';
 import 'package:proyecto_aplicacion_soporte/ui/pages/coordinator/clients/edit_client.dart';
 
+import '../../../../domain/models/client.dart';
+
 class ClientsMenu extends StatefulWidget {
   const ClientsMenu({super.key});
 

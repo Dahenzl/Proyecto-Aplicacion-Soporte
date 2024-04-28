@@ -6,9 +6,9 @@ import 'package:http/http.dart' as http;
 class ClientDataSource {
 
   Future<List<Client>> getClients() async {
-    logError("Web service: getting clients...");
+    logInfo("Web service: getting clients...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/clients").replace(queryParameters: {"format": 'json'});
+    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/users").replace(queryParameters: {"format": 'json'});
     final response = await http.get(requestUri);
 
     if (response.statusCode == 200) {
@@ -26,7 +26,7 @@ class ClientDataSource {
   Future<bool> addClient(Client client) async {
     logInfo("Web service: Adding client...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/clients");
+    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/users");
     final response = await http.post(
       requestUri,
       headers: <String, String>{
@@ -47,7 +47,7 @@ class ClientDataSource {
   Future<bool> updateClient(Client client) async {
     logInfo("Web service: Updating client...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/clients/${client.id}");
+    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/users/${client.id}");
     final response = await http.put(
       requestUri,
       headers: <String, String>{
@@ -68,7 +68,7 @@ class ClientDataSource {
   Future<bool> deleteClient(Client client) async {
     logInfo("Web service: Deleting client...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/clients/${client.id}");
+    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/users/${client.id}");
     final response = await http.delete(
       requestUri,
       headers: <String, String>{

@@ -2,33 +2,31 @@ import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
 import '../../domain/models/client.dart';
-import '../../domain/models/report.dart';
-import '../../domain/models/support_user.dart';
+//import '../../domain/models/report.dart';
+//import '../../domain/models/support_user.dart';
 
 import '../../domain/use_case/client_usecase.dart';
-import '../../domain/use_case/report_usecase.dart';
-import '../../domain/use_case/support_user_usecase.dart';
-
+//import '../../domain/use_case/report_usecase.dart';
+//import '../../domain/use_case/support_user_usecase.dart';
 
 
 class CoordinatorController extends GetxController {
-  final RxList<Client> _clients = <Client>[
-    Client(
-        id: 1,
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com'),
-    Client(
-        id: 2,
-        firstName: 'Jane',
-        lastName: 'Doe',
-        email: 'jane.doe@example.com'),
-    Client(
-        id: 3,
-        firstName: 'Alice',
-        lastName: 'Smith',
-        email: 'alice.smith@example.com'),
-  ].obs;
+
+  final RxList<Client> _clients = <Client>[].obs;
+  final ClientUseCase clientUseCase = Get.find();
+
+  List<Client> get clients => _clients;
+
+  @override
+  void onInit() {
+    getClients();
+    super.onInit();
+  }
+
+  getClients() async {
+    logInfo("Getting clients");
+    _clients.value = await clientUseCase.getClients();
+  }
 
   final RxList<SupportUser> _supports = <SupportUser>[
     SupportUser(
@@ -108,7 +106,6 @@ class CoordinatorController extends GetxController {
             password: '123456')),
   ];
 
-  List<Client> get clients => _clients;
   List<SupportUser> get supports => _supports;
   List<Report> get reports => _reports;
 
@@ -192,19 +189,6 @@ class CoordinatorController extends GetxController {
       _reports[index] = updatedReport;
     }
   }
-}
-
-class Client {
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String email;
-
-  Client(
-      {required this.id,
-      required this.firstName,
-      required this.lastName,
-      required this.email});
 }
 
 class SupportUser {
