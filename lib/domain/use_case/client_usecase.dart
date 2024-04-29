@@ -1,24 +1,17 @@
-import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
-
 import '../models/client.dart';
-import '../repositories/repository.dart';
+import '../repositories/i_client_repository.dart';
 
 class ClientUseCase {
-  final Repository _repository = Get.find();
+  final IClientRepository _repository;
 
-  ClientUseCase();
+  ClientUseCase(this._repository);
 
-  Future<List<Client>> getClients() async {
-    logInfo("Getting clients from UseCase");
-    return await _repository.getClients();
-  }
+  Future<List<Client>> getClients() async => await _repository.getClients();
 
-  Future<void> addClient(Client client) async => await _repository.addClient(client);
+  Future<bool> addClient(Client client) async => await _repository.addClient(client);
 
-  Future<void> updateClient(Client client) async =>
+  Future<bool> updateClient(Client client) async =>
       await _repository.updateClient(client);
 
-  deleteClient(Client client) async => await _repository.deleteClient(client);
-
+  Future<bool> deleteClient(int id) async => await _repository.deleteClient(id);
 }

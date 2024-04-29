@@ -3,32 +3,48 @@ import 'package:loggy/loggy.dart';
 import '../../../domain/models/support_user.dart';
 import 'package:http/http.dart' as http;
 
-class SupportUserDataSource {
+import 'i_support_user_datasource.dart';
 
+class SupportUserDataSource implements ISupportUserDataSource {
+  final http.Client httpClient;
+  final String apiKey = 'tRq1YZ';
+
+  SupportUserDataSource({http.Client? client})
+      : httpClient = client ?? http.Client();
+
+  @override
   Future<List<SupportUser>> getSupportUsers() async {
     logError("Web service: getting support users...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/tRq1YZ/support").replace(queryParameters: {"format": 'json'});
-    final response = await http.get(requestUri);
+    List<SupportUser> supportUsers = [];
+    var request = Uri.parse("https://retoolapi.dev/$apiKey/support")
+        .resolveUri(Uri(queryParameters: {
+      "format": 'json',
+    }));
+
+    var response = await httpClient.get(request);
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      final List<SupportUser> supportUsers = data.map((x) => SupportUser.fromJson(x)).toList();
+      final data = jsonDecode(response.body);
+
+      supportUsers = List<SupportUser>.from(
+          data.skip(1).map((x) => SupportUser.fromJson(x)));
+
       logInfo("Web service: support users retrieved successfully.");
-      return supportUsers;
     } else {
-      final String errorMessage = 'Failed to get support users: ${response.statusCode}';
-      logError(errorMessage);
-      throw Exception(errorMessage);
+      logError('Failed to get support users: ${response.statusCode}');
+      throw Exception('Error code ${response.statusCode}');
     }
+
+    return Future.value(supportUsers);
   }
 
+  @override
   Future<bool> addSupportUser(SupportUser supportUser) async {
     logInfo("Web service: Adding support user...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/tRq1YZ/support");
-    final response = await http.post(
-      requestUri,
+    final response = await httpClient.post(
+      Uri.parse("https://retoolapi.dev/$apiKey/support"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -44,12 +60,12 @@ class SupportUserDataSource {
     }
   }
 
+  @override
   Future<bool> updateSupportUser(SupportUser supportUser) async {
     logInfo("Web service: Updating support user...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/tRq1YZ/support/${supportUser.id}");
-    final response = await http.put(
-      requestUri,
+    final response = await httpClient.put(
+      Uri.parse("https://retoolapi.dev/$apiKey/support"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -65,12 +81,12 @@ class SupportUserDataSource {
     }
   }
 
-  Future<bool> deleteSupportUser(SupportUser supportUser) async {
+  @override
+  Future<bool> deleteSupportUser(int id) async {
     logInfo("Web service: Deleting support user...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/tRq1YZ/support/${supportUser.id}");
-    final response = await http.delete(
-      requestUri,
+    final response = await httpClient.delete(
+      Uri.parse("https://retoolapi.dev/$apiKey/users/$id"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -84,6 +100,4 @@ class SupportUserDataSource {
       return Future.value(false);
     }
   }
-
 }
-

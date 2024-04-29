@@ -3,32 +3,47 @@ import 'package:loggy/loggy.dart';
 import '../../../domain/models/client.dart';
 import 'package:http/http.dart' as http;
 
-class ClientDataSource {
+import 'i_client_datasource.dart';
 
+class ClientDataSource implements IClientDataSource {
+  final http.Client httpClient;
+  final String apiKey = 'f0yCMk';
+
+  ClientDataSource({http.Client? client})
+      : httpClient = client ?? http.Client();
+
+  @override
   Future<List<Client>> getClients() async {
     logInfo("Web service: getting clients...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/users").replace(queryParameters: {"format": 'json'});
-    final response = await http.get(requestUri);
+    List<Client> clients = [];
+    var request = Uri.parse("https://retoolapi.dev/$apiKey/users")
+        .resolveUri(Uri(queryParameters: {
+      "format": 'json',
+    }));
+
+    var response = await httpClient.get(request);
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      final List<Client> clients = data.map((x) => Client.fromJson(x)).toList();
+      final data = jsonDecode(response.body);
+
+      clients = List<Client>.from(data.skip(1).map((x) => Client.fromJson(x)));
+
       logInfo("Web service: Clients retrieved successfully.");
-      return clients;
     } else {
-      final String errorMessage = 'Failed to get clients: ${response.statusCode}';
-      logError(errorMessage);
-      throw Exception(errorMessage);
+      logError('Failed to get clients: ${response.statusCode}');
+      throw Exception('Error code ${response.statusCode}');
     }
+
+    return Future.value(clients);
   }
 
+  @override
   Future<bool> addClient(Client client) async {
     logInfo("Web service: Adding client...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/users");
-    final response = await http.post(
-      requestUri,
+    final response = await httpClient.post(
+      Uri.parse("https://retoolapi.dev/$apiKey/users"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -44,12 +59,12 @@ class ClientDataSource {
     }
   }
 
+  @override
   Future<bool> updateClient(Client client) async {
     logInfo("Web service: Updating client...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/users/${client.id}");
-    final response = await http.put(
-      requestUri,
+    final response = await httpClient.put(
+      Uri.parse("https://retoolapi.dev/$apiKey/users"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -65,12 +80,12 @@ class ClientDataSource {
     }
   }
 
-  Future<bool> deleteClient(Client client) async {
+  @override
+  Future<bool> deleteClient(int id) async {
     logInfo("Web service: Deleting client...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/users/${client.id}");
-    final response = await http.delete(
-      requestUri,
+    final response = await httpClient.delete(
+      Uri.parse("https://retoolapi.dev/$apiKey/users/$id"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -78,11 +93,10 @@ class ClientDataSource {
 
     if (response.statusCode == 200) {
       logInfo("Web service: Client deleted successfully.");
-      return true;
+      return Future.value(true);
     } else {
       logError("Failed to delete client: ${response.statusCode}");
-      return false;
+      return Future.value(false);
     }
   }
-
 }

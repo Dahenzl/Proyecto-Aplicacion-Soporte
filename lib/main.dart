@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+
 import 'package:proyecto_aplicacion_soporte/ui/controller/authentication_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/support_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/pages/authentication/login_page.dart';
 
-import './domain/use_case/client_usecase.dart';
-import './domain/repositories/repository.dart';
+
+import 'data/datasources/remote/client_datasource.dart';
+import 'data/repositories/client_repository.dart';
+import 'domain/use_case/client_usecase.dart';
+
+import 'data/datasources/remote/report_datasource.dart';
+import 'data/repositories/report_repository.dart';
+import 'domain/use_case/report_usecase.dart';
+
+import 'data/datasources/remote/support_user_datasource.dart';
+import 'data/repositories/support_user_repository.dart';
+import 'domain/use_case/support_user_usecase.dart';
 
 void main() {
   Loggy.initLoggy(
@@ -16,8 +27,18 @@ void main() {
     ),
   );
 
-  Get.put(Repository());
-  Get.put(ClientUseCase());
+  Get.put<IClientDataSource>(ClientDataSource());
+  Get.put<IClientRepository>(ClientRepository(Get.find()));
+  Get.put(ClientUseCase(Get.find()));
+
+  Get.put<IReportDataSource>(ReportDataSource());
+  Get.put<IReportRepository>(ReportRepository(Get.find()));
+  Get.put(ReportUseCase(Get.find()));
+
+  Get.put<ISupportUserDataSource>(SupportUserDataSource());
+  Get.put<ISupportUserRepository>(SupportUserRepository(Get.find()));
+  Get.put(SupportUserUseCase(Get.find()));
+
 
   Get.put(AuthenticationController());
   Get.put(CoordinatorController());
