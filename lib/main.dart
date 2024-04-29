@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:proyecto_aplicacion_soporte/domain/repositories/i_authentication_repository.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/authentication_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/support_controller.dart';
@@ -17,6 +18,7 @@ void main() {
   );
 
   Get.put(Repository());
+  Get.put(AuthenticationRepository());
   Get.put(ClientUseCase());
 
   Get.put(AuthenticationController());
