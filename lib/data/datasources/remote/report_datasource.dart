@@ -3,32 +3,47 @@ import 'package:loggy/loggy.dart';
 import '../../../domain/models/report.dart';
 import 'package:http/http.dart' as http;
 
-class ReportDataSource {
+import 'i_report_datasource.dart';
 
+class ReportDataSource implements IReportDataSource {
+  final http.Client httpClient;
+  final String apiKey = 'Z05bVs';
+
+  ReportDataSource({http.Client? client})
+      : httpClient = client ?? http.Client();
+
+  @override
   Future<List<Report>> getReports() async {
     logError("Web service: getting reports...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/reports").replace(queryParameters: {"format": 'json'});
-    final response = await http.get(requestUri);
+    List<Report> reports = [];
+    var request = Uri.parse("https://retoolapi.dev/$apiKey/reports")
+        .resolveUri(Uri(queryParameters: {
+      "format": 'json',
+    }));
+
+    var response = await httpClient.get(request);
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      final List<Report> reports = data.map((x) => Report.fromJson(x)).toList();
+      final data = jsonDecode(response.body);
+
+      reports = List<Report>.from(data.skip(1).map((x) => Report.fromJson(x)));
+
       logInfo("Web service: Reports retrieved successfully.");
-      return reports;
     } else {
-      final String errorMessage = 'Failed to get reports: ${response.statusCode}';
-      logError(errorMessage);
-      throw Exception(errorMessage);
+      logError('Failed to get reports: ${response.statusCode}');
+      throw Exception('Error code ${response.statusCode}');
     }
+
+    return Future.value(reports);
   }
 
+  @override
   Future<bool> addReport(Report report) async {
     logInfo("Web service: Adding report...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/reports");
-    final response = await http.post(
-      requestUri,
+    final response = await httpClient.post(
+      Uri.parse("https://retoolapi.dev/$apiKey/reports"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -44,12 +59,12 @@ class ReportDataSource {
     }
   }
 
+  @override
   Future<bool> updateReport(Report report) async {
     logInfo("Web service: Updating report...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/reports/${report.id}");
-    final response = await http.put(
-      requestUri,
+    final response = await httpClient.put(
+      Uri.parse("https://retoolapi.dev/$apiKey/reports"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -65,12 +80,12 @@ class ReportDataSource {
     }
   }
 
-  Future<bool> deleteReport(Report report) async {
+  @override
+  Future<bool> deleteReport(int id) async {
     logInfo("Web service: Deleting report...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/f0yCMk/reports/${report.id}");
-    final response = await http.delete(
-      requestUri,
+    final response = await httpClient.delete(
+      Uri.parse("https://retoolapi.dev/$apiKey/reports/$id"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -78,11 +93,10 @@ class ReportDataSource {
 
     if (response.statusCode == 200) {
       logInfo("Web service: report deleted successfully.");
-      return true;
+      return Future.value(true);
     } else {
       logError("Failed to delete report: ${response.statusCode}");
-      return false;
+      return Future.value(false);
     }
   }
-
 }

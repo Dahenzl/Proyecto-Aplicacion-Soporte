@@ -1,24 +1,17 @@
-import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
-
 import '../models/support_user.dart';
-import '../repositories/repository.dart';
+import '../repositories/i_support_user_repository.dart';
 
 class SupportUserUseCase {
-  final Repository _repository = Get.find();
+  final ISupportUserRepository _repository;
 
-  SupportUserUseCase();
+  SupportUserUseCase(this._repository);
 
-  Future<List<SupportUser>> getSupportUsers() async {
-    logInfo("Getting support user from UseCase");
-    return await _repository.getSupportUsers();
-  }
+  Future<List<SupportUser>> getSupportUsers() async => await _repository.getSupportUsers();
 
-  Future<void> addSupportUser(SupportUser support) async => await _repository.addSupportUser(support);
+  Future<bool> addSupportUser(SupportUser supportUser) async => await _repository.addSupportUser(supportUser);
 
-  Future<void> updateSupportUser(SupportUser support) async =>
-      await _repository.updateSupportUser(support);
+  Future<bool> updateSupportUser(SupportUser supportUser) async =>
+      await _repository.updateSupportUser(supportUser);
 
-  deleteSupportUser(SupportUser support) async => await _repository.deleteSupportUser(support);
-
+  Future<bool> deleteSupportUser(int id) async => await _repository.deleteSupportUser(id);
 }

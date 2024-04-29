@@ -1,24 +1,17 @@
-import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
-
 import '../models/report.dart';
-import '../repositories/repository.dart';
+import '../repositories/i_report_repository.dart';
 
 class ReportUseCase {
-  final Repository _repository = Get.find();
+  final IReportRepository _repository;
 
-  ReportUseCase();
+  ReportUseCase(this._repository);
 
-  Future<List<Report>> getReports() async {
-    logInfo("Getting reports from UseCase");
-    return await _repository.getReports();
-  }
+  Future<List<Report>> getReports() async => await _repository.getReports();
 
-  Future<void> addReport(Report report) async => await _repository.addReport(report);
+  Future<bool> addReport(Report report) async => await _repository.addReport(report);
 
-  Future<void> updateReport(Report report) async =>
+  Future<bool> updateReport(Report report) async =>
       await _repository.updateReport(report);
 
-  deleteReport(Report report) async => await _repository.deleteReport(report);
-
+  Future<bool> deleteReport(int id) async => await _repository.deleteReport(id);
 }
