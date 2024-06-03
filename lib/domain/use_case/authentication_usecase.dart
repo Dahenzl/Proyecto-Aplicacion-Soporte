@@ -5,9 +5,9 @@ import '../models/support_user.dart';
 import '../repositories/i_authentication_repository.dart';
 
 class AuthenticationUseCase {
-  final IAuthenticationRepository _authenticationRepository = Get.find();
+  final IAuthenticationRepository _authenticationRepository;
 
-  AuthenticationUseCase();
+  AuthenticationUseCase(this._authenticationRepository);
 
   Future<(int, String)> login(String email, String password) async =>
       await _authenticationRepository.login(email, password);

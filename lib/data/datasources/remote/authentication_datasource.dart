@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:loggy/loggy.dart';
+import 'package:proyecto_aplicacion_soporte/data/datasources/remote/i_authentication_datasource.dart';
 import '../../../domain/models/support_user.dart';
 import 'package:http/http.dart' as http;
 
-class AuthenticationDataSource {
+class AuthenticationDataSource implements IAuthenticationDataSource{
   Future<List<SupportUser>> getSupportUsers() async {
     logError("Web service: getting support users...");
 

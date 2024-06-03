@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:proyecto_aplicacion_soporte/data/datasources/remote/authentication_datasource.dart';
+import 'package:proyecto_aplicacion_soporte/data/datasources/remote/i_authentication_datasource.dart';
+import 'package:proyecto_aplicacion_soporte/data/repositories/authentication_repository.dart';
 import 'package:proyecto_aplicacion_soporte/domain/repositories/i_authentication_repository.dart';
+import 'package:proyecto_aplicacion_soporte/domain/use_case/authentication_usecase.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/authentication_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/support_controller.dart';
@@ -45,9 +49,9 @@ void main() {
   Get.put<ISupportUserRepository>(SupportUserRepository(Get.find()));
   Get.put(SupportUserUseCase(Get.find()));
 
-  // Get.put<IAuthenticationDataSource>(AuthenticationDataSource());
-  // Get.put<IAuthenticationRepository>(AuthenticationRepository(Get.find()));
-  // Get.put(AuthenticationUseCase(Get.find()));
+  Get.put<IAuthenticationDataSource>(AuthenticationDataSource());
+  Get.put<IAuthenticationRepository>(AuthenticationRepository(Get.find()));
+  Get.put(AuthenticationUseCase(Get.find()));
 
   Get.put(AuthenticationController());
   Get.put(CoordinatorController());
