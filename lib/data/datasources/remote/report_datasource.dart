@@ -14,7 +14,7 @@ class ReportDataSource implements IReportDataSource {
 
   @override
   Future<List<Report>> getReports() async {
-    logError("Web service: getting reports...");
+    logInfo("Web service: getting reports...");
 
     List<Report> reports = [];
     var request = Uri.parse("https://retoolapi.dev/$apiKey/reports")

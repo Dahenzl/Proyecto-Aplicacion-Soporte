@@ -14,7 +14,7 @@ class SupportUserDataSource implements ISupportUserDataSource {
 
   @override
   Future<List<SupportUser>> getSupportUsers() async {
-    logError("Web service: getting support users...");
+    logInfo("Web service: getting support users...");
 
     List<SupportUser> supportUsers = [];
     var request = Uri.parse("https://retoolapi.dev/$apiKey/support")

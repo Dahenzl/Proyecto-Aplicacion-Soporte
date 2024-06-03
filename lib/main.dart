@@ -9,7 +9,13 @@ import 'package:proyecto_aplicacion_soporte/ui/pages/authentication/login_page.d
 
 
 import 'data/datasources/remote/client_datasource.dart';
+import 'data/datasources/remote/i_client_datasource.dart';
+import 'data/datasources/remote/i_report_datasource.dart';
+import 'data/datasources/remote/i_support_user_datasource.dart';
 import 'data/repositories/client_repository.dart';
+import 'domain/repositories/i_client_repository.dart';
+import 'domain/repositories/i_report_repository.dart';
+import 'domain/repositories/i_support_user_repository.dart';
 import 'domain/use_case/client_usecase.dart';
 
 import 'data/datasources/remote/report_datasource.dart';
@@ -39,6 +45,9 @@ void main() {
   Get.put<ISupportUserRepository>(SupportUserRepository(Get.find()));
   Get.put(SupportUserUseCase(Get.find()));
 
+  // Get.put<IAuthenticationDataSource>(AuthenticationDataSource());
+  // Get.put<IAuthenticationRepository>(AuthenticationRepository(Get.find()));
+  // Get.put(AuthenticationUseCase(Get.find()));
 
   Get.put(AuthenticationController());
   Get.put(CoordinatorController());
