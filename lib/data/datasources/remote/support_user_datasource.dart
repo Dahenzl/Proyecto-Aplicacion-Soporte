@@ -41,6 +41,16 @@ class SupportUserDataSource implements ISupportUserDataSource {
 
   @override
   Future<bool> addSupportUser(SupportUser supportUser) async {
+
+    final currentSupportUsers = await getSupportUsers();
+
+    bool emailExists = currentSupportUsers.any((user) => user.email == supportUser.email);
+
+    if (emailExists) {
+      logInfo("Web service: Email already in use.");
+      return Future.value(false);
+    }
+
     logInfo("Web service: Adding support user...");
 
     final response = await httpClient.post(
