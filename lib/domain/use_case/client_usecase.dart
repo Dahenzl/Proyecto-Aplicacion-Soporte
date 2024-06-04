@@ -14,4 +14,6 @@ class ClientUseCase {
       await _repository.updateClient(client);
 
   Future<bool> deleteClient(int id) async => await _repository.deleteClient(id);
+
+  Future<Client> getClientById(int id) async => await _repository.getClientById(id);
 }

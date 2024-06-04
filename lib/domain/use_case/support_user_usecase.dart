@@ -14,4 +14,6 @@ class SupportUserUseCase {
       await _repository.updateSupportUser(supportUser);
 
   Future<bool> deleteSupportUser(int id) async => await _repository.deleteSupportUser(id);
+
+  Future<SupportUser> getSupportUserById(int id) async => await _repository.getSupportUserById(id);
 }
