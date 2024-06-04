@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_aplicacion_soporte/domain/models/support_user.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller.dart';
 
 class EditSupport extends StatefulWidget {

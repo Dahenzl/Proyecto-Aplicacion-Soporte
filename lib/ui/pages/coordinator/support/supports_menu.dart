@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:proyecto_aplicacion_soporte/domain/models/support_user.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/pages/coordinator/support/create_support.dart';
 import 'package:proyecto_aplicacion_soporte/ui/pages/coordinator/support/edit_support.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:proyecto_aplicacion_soporte/domain/models/report.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/pages/coordinator/reports/view_report.dart';
 
@@ -36,7 +37,7 @@ class _ReportsMenuState extends State<ReportsMenu> {
           child: ListTile(
             title: Text(report.title),
             subtitle:
-                Text("${report.client.firstName} ${report.client.lastName}"),
+                Text("${report.userId} ${report.userId}"),
             onTap: () {
               logInfo("Going to view report ${report.id}");
               Get.to(() => const ViewReport(), arguments: [report, report.id]);

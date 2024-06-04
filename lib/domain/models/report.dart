@@ -1,7 +1,7 @@
 class Report {
 
   int id;
-  int rating;
+  double rating;
   String title;
   String description;
   int startTime;

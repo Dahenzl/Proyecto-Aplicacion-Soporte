@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_aplicacion_soporte/domain/models/report.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller.dart';
 
 class ViewReport extends StatefulWidget {
@@ -18,10 +19,10 @@ class _ViewReportState extends State<ViewReport> {
     CoordinatorController coordinatorController = Get.find();
     String title = report.title;
     String description = report.description;
-    DateTime date = report.date;
-    int minutes = report.minutes;
-    String client = "${report.client.firstName} ${report.client.lastName}";
-    String support = "${report.support.firstName} ${report.support.lastName}";
+    int date = report.startTime;
+    int minutes = report.duration;
+    String client = "${report.userId} ${report.userId}";
+    String support = "${report.supportId} ${report.supportId}";
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +47,7 @@ class _ViewReportState extends State<ViewReport> {
               height: 20,
             ),
             Text(
-              "Date:\n${date.day}/${date.month}/${date.year} - ${date.hour}:${date.minute}",
+              "Date:\n${date}/${date}/${date} - ${date}:${date}",
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(
@@ -89,7 +90,7 @@ class _ViewReportState extends State<ViewReport> {
                 color: Colors.amber,
               ),
               onRatingUpdate: (rating) {
-                coordinatorController.rateReport(report.id, rating);
+                coordinatorController.updateReport(report);
               },
             ),
           ],
