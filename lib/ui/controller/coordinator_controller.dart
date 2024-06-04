@@ -53,9 +53,7 @@ class CoordinatorController extends GetxController {
 
   addSupport(String firstName, String lastName, String email, String password) async {
     logInfo("Add support");
-    int newId = supports.isNotEmpty ? supports.last.id + 1 : 1;
     await supportUserUseCase.addSupportUser(SupportUser(
-        id: newId,
         firstName: firstName,
         lastName: lastName,
         email: email,

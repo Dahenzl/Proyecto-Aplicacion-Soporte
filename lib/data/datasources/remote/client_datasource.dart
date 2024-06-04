@@ -17,12 +17,13 @@ class ClientDataSource implements IClientDataSource {
     logInfo("Web service: getting clients...");
 
     List<Client> clients = [];
-    var request = Uri.parse("https://retoolapi.dev/$apiKey/users")
-        .resolveUri(Uri(queryParameters: {
-      "format": 'json',
-    }));
 
-    var response = await httpClient.get(request);
+    final response = await httpClient.get(
+      Uri.parse("https://retoolapi.dev/$apiKey/users"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
@@ -36,6 +37,29 @@ class ClientDataSource implements IClientDataSource {
     }
 
     return Future.value(clients);
+  }
+
+  @override
+  Future<Client> getClientById(int id) async {
+    logInfo("Web service: getting client by id...");
+
+    final response = await httpClient.get(
+      Uri.parse("https://retoolapi.dev/$apiKey/users/$id"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final client = Client.fromJson(data);
+      logInfo("Web service: client retrieved successfully.");
+      return Future.value(client);
+    } else {
+      logError('Failed to get client: ${response.statusCode}');
+      throw Exception('Error code ${response.statusCode}');
+    }
+
   }
 
   @override
@@ -64,7 +88,7 @@ class ClientDataSource implements IClientDataSource {
     logInfo("Web service: Updating client...");
 
     final response = await httpClient.put(
-      Uri.parse("https://retoolapi.dev/$apiKey/users"),
+      Uri.parse("https://retoolapi.dev/$apiKey/users/${client.id}"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

@@ -17,12 +17,13 @@ class SupportUserDataSource implements ISupportUserDataSource {
     logInfo("Web service: getting support users...");
 
     List<SupportUser> supportUsers = [];
-    var request = Uri.parse("https://retoolapi.dev/$apiKey/support")
-        .resolveUri(Uri(queryParameters: {
-      "format": 'json',
-    }));
 
-    var response = await httpClient.get(request);
+    final response = await httpClient.get(
+      Uri.parse("https://retoolapi.dev/$apiKey/support"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
@@ -40,18 +41,49 @@ class SupportUserDataSource implements ISupportUserDataSource {
   }
 
   @override
-  Future<bool> addSupportUser(SupportUser supportUser) async {
+  Future<SupportUser> getSupportUserById(int id) async {
+    logInfo("Web service: getting support user by id...");
+
+    final response = await httpClient.get(
+      Uri.parse("https://retoolapi.dev/$apiKey/support/$id"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final supportUser = SupportUser.fromJson(data);
+      logInfo("Web service: Support user retrieved successfully.");
+      return Future.value(supportUser);
+    } else {
+      logError('Failed to get support user: ${response.statusCode}');
+      throw Exception('Error code ${response.statusCode}');
+    }
+
+  }
+
+  @override
+  Future<bool> isEmailInUse(String email) async {
+    logInfo("Web service: checking if the email is already in use...");
 
     final currentSupportUsers = await getSupportUsers();
 
-    bool emailExists = currentSupportUsers.any((user) => user.email == supportUser.email);
+    bool emailInUse = currentSupportUsers.any((user) => user.email == email);
+
+    return Future.value(emailInUse);
+  }
+
+  @override
+  Future<bool> addSupportUser(SupportUser supportUser) async {
+    logInfo("Web service: Adding support user...");
+
+    final emailExists = await isEmailInUse(supportUser.email);
 
     if (emailExists) {
       logInfo("Web service: Email already in use.");
       return Future.value(false);
     }
-
-    logInfo("Web service: Adding support user...");
 
     final response = await httpClient.post(
       Uri.parse("https://retoolapi.dev/$apiKey/support"),
@@ -74,8 +106,15 @@ class SupportUserDataSource implements ISupportUserDataSource {
   Future<bool> updateSupportUser(SupportUser supportUser) async {
     logInfo("Web service: Updating support user...");
 
+    //final emailExists = await isEmailInUse(supportUser.email);
+
+    //if (emailExists) {
+      //logInfo("Web service: Email already in use.");
+      //return Future.value(false);
+    //}
+
     final response = await httpClient.put(
-      Uri.parse("https://retoolapi.dev/$apiKey/support"),
+      Uri.parse("https://retoolapi.dev/$apiKey/support/${supportUser.id}"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
