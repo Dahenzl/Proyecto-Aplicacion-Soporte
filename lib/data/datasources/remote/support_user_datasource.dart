@@ -106,12 +106,19 @@ class SupportUserDataSource implements ISupportUserDataSource {
   Future<bool> updateSupportUser(SupportUser supportUser) async {
     logInfo("Web service: Updating support user...");
 
-    //final emailExists = await isEmailInUse(supportUser.email);
 
-    //if (emailExists) {
-      //logInfo("Web service: Email already in use.");
-      //return Future.value(false);
-    //}
+    final user = await getSupportUserById(supportUser.id);
+
+    if (user.email != supportUser.email) {
+
+      final emailExists = await isEmailInUse(supportUser.email);
+
+      if (emailExists) {
+        logInfo("Web service: Email already in use.");
+        return Future.value(false);
+      }
+
+    }
 
     final response = await httpClient.put(
       Uri.parse("https://retoolapi.dev/$apiKey/support/${supportUser.id}"),
