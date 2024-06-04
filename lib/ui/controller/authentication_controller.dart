@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:proyecto_aplicacion_soporte/domain/use_case/authentication_usecase.dart';
-import 'package:proyecto_aplicacion_soporte/ui/pages/coordinator/coordinator_main.dart';
-import 'package:proyecto_aplicacion_soporte/ui/pages/support/support_main.dart';
 
 class AuthenticationController extends GetxController {
   final logged = false.obs;

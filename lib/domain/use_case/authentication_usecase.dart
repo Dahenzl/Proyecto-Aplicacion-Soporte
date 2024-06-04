@@ -1,7 +1,3 @@
-import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
-
-import '../models/support_user.dart';
 import '../repositories/i_authentication_repository.dart';
 
 class AuthenticationUseCase {
