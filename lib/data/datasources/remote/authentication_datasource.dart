@@ -5,6 +5,7 @@ import '../../../domain/models/support_user.dart';
 import 'package:http/http.dart' as http;
 
 class AuthenticationDataSource implements IAuthenticationDataSource{
+  @override
   Future<List<SupportUser>> getSupportUsers() async {
     logError("Web service: getting support users...");
 
@@ -26,6 +27,7 @@ class AuthenticationDataSource implements IAuthenticationDataSource{
     }
   }
 
+  @override
   Future<(int, String)> login(String email, String password) async {
     if (email == 'a@a.com' && password == '123456') {
       return (1, 'coordinator');
@@ -41,7 +43,8 @@ class AuthenticationDataSource implements IAuthenticationDataSource{
     throw Exception('Credenciales inválidas');
   }
 
+  @override
   Future<bool> logOut() async {
-    return Future.value(true);
+    return Future.value(false);
   }
 }

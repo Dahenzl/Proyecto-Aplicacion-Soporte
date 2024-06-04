@@ -1,6 +1,10 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:proyecto_aplicacion_soporte/ui/pages/coordinator/coordinator_main.dart';
+import 'package:proyecto_aplicacion_soporte/ui/pages/support/support_main.dart';
 import '../../controller/authentication_controller.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,7 +23,25 @@ class _LoginPageState extends State<LoginPage> {
   _login(theEmail, thePassword) async {
     logInfo('_login $theEmail $thePassword');
     try {
-      await authenticationController.login(theEmail, thePassword);
+      await authenticationController.login(theEmail, thePassword).then((value) {
+        if (value.$2 == "coordinator") {
+          Get.snackbar(
+            "Login",
+            "Login successful",
+            icon: const Icon(Icons.person, color: Colors.green),
+            snackPosition: SnackPosition.BOTTOM,
+          );
+          Get.off(() => CoordinatorMain(email: theEmail));
+        } else if(value.$2 == "support"){
+          Get.snackbar(
+            "Login",
+            "Login successful",
+            icon: const Icon(Icons.person, color: Colors.green),
+            snackPosition: SnackPosition.BOTTOM,
+          );
+          Get.off(() => SupportMain(email: theEmail));
+        } 
+      });
     } catch (err) {
       Get.snackbar(
         "Login",

@@ -6,38 +6,16 @@ import 'package:proyecto_aplicacion_soporte/ui/pages/support/support_main.dart';
 
 class AuthenticationController extends GetxController {
   final logged = false.obs;
-  final id = 0.obs;
-  final type = ''.obs;
   final errorMessage = ''.obs; // Mensaje de error observable
   final AuthenticationUseCase authenticationUseCase = Get.find();
 
   login(String email, String password) async {
     logInfo("Trying to login...");
-    authenticationUseCase.login(email, password).then((value) => {
-          if (value.$2 == 'coordinator')
-            {
-              logged.value = true,
-              id.value = value.$1,
-              type.value = "coordinator",
-              Get.off(() => CoordinatorMain(id: value.$1))
-            }
-          else if (value.item1 == 201)
-            {
-              logged.value = true,
-              id.value = value.item2,
-              type.value = "support",
-              Get.off(() => SupportMain())
-            }
-          else
-            {
-              errorMessage.value = "Usuario o contraseña incorrectos"
-            }
-        
-    });
+    return await authenticationUseCase.login(email, password);
   }
 
   logout() async {
     logInfo("Logout");
-    await authenticationUseCase.logOut();
+    logged.value = await authenticationUseCase.logOut();
   }
 }
