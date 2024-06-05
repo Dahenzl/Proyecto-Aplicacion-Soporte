@@ -8,15 +8,10 @@ import '../../domain/use_case/report_usecase.dart';
 
 class SupportController extends GetxController {
   final RxList<Client> clients = <Client>[].obs;
+  final RxList<Report> reports = <Report>[].obs;
   final ClientUseCase clientUseCase = Get.find();
   final ReportUseCase reportUseCase = Get.find();
   final SupportUserUseCase supportUserUseCase = Get.find();
-
-  @override
-  void onInit() {
-    super.onInit();
-    fetchClients();
-  }
 
   Future<void> fetchClients() async {
     logInfo("Fetching clients");
@@ -56,5 +51,15 @@ class SupportController extends GetxController {
   getSupportById(int id) async {
     logInfo("Getting support by id");
     return await supportUserUseCase.getSupportUserById(id);
+  }
+
+  getClientById(int id) async {
+    logInfo("Getting client by id");
+    return await clientUseCase.getClientById(id);
+  }
+
+  getReportsBySupportId(int id) async {
+    logInfo("Getting reports by support id");
+    reports.value = await reportUseCase.getReportsBySupportId(id);
   }
 }

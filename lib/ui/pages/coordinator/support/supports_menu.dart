@@ -14,7 +14,21 @@ class SupportsMenu extends StatefulWidget {
 }
 
 class _SupportsMenuState extends State<SupportsMenu> {
+  bool isLoading = true;
   CoordinatorController coordinatorController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    await coordinatorController.getSupports();
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +39,9 @@ class _SupportsMenuState extends State<SupportsMenu> {
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
-      body: Center(child: _getXlistView()),
+      body: isLoading
+      ? const Center(child: CircularProgressIndicator())
+      : Center(child: _getXlistView()),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           logInfo("Add support from UI");
