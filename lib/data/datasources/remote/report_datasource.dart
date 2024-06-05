@@ -17,12 +17,13 @@ class ReportDataSource implements IReportDataSource {
     logInfo("Web service: getting reports...");
 
     List<Report> reports = [];
-    var request = Uri.parse("https://retoolapi.dev/$apiKey/reports")
-        .resolveUri(Uri(queryParameters: {
-      "format": 'json',
-    }));
 
-    var response = await httpClient.get(request);
+    final response = await httpClient.get(
+      Uri.parse("https://retoolapi.dev/$apiKey/reports"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
@@ -36,6 +37,17 @@ class ReportDataSource implements IReportDataSource {
     }
 
     return Future.value(reports);
+  }
+
+  @override
+  Future<List<Report>> getReportsBySupportId(int supportId) async {
+    logInfo("Web service: getting reports by support id...");
+
+    final currentReports = await getReports();
+
+    List<Report> filteredReports = currentReports.where((report) => report.supportId == supportId).toList();
+
+    return Future.value(filteredReports);
   }
 
   @override

@@ -11,10 +11,10 @@ import 'package:http/http.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i8;
 import 'package:proyecto_aplicacion_soporte/data/datasources/remote/i_client_datasource.dart'
-    as _i4;
+    as _i6;
 import 'package:proyecto_aplicacion_soporte/domain/models/client.dart' as _i2;
 import 'package:proyecto_aplicacion_soporte/domain/repositories/i_client_repository.dart'
-    as _i6;
+    as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -60,70 +60,10 @@ class _FakeStreamedResponse_2 extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [IClientDataSource].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockIClientDataSource extends _i1.Mock implements _i4.IClientDataSource {
-  MockIClientDataSource() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i5.Future<List<_i2.Client>> getClients() => (super.noSuchMethod(
-        Invocation.method(
-          #getClients,
-          [],
-        ),
-        returnValue: _i5.Future<List<_i2.Client>>.value(<_i2.Client>[]),
-      ) as _i5.Future<List<_i2.Client>>);
-
-  @override
-  _i5.Future<_i2.Client> getClientById(int? id) => (super.noSuchMethod(
-        Invocation.method(
-          #getClientById,
-          [id],
-        ),
-        returnValue: _i5.Future<_i2.Client>.value(_FakeClient_0(
-          this,
-          Invocation.method(
-            #getClientById,
-            [id],
-          ),
-        )),
-      ) as _i5.Future<_i2.Client>);
-
-  @override
-  _i5.Future<bool> addClient(_i2.Client? client) => (super.noSuchMethod(
-        Invocation.method(
-          #addClient,
-          [client],
-        ),
-        returnValue: _i5.Future<bool>.value(false),
-      ) as _i5.Future<bool>);
-
-  @override
-  _i5.Future<bool> updateClient(_i2.Client? client) => (super.noSuchMethod(
-        Invocation.method(
-          #updateClient,
-          [client],
-        ),
-        returnValue: _i5.Future<bool>.value(false),
-      ) as _i5.Future<bool>);
-
-  @override
-  _i5.Future<bool> deleteClient(int? id) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteClient,
-          [id],
-        ),
-        returnValue: _i5.Future<bool>.value(false),
-      ) as _i5.Future<bool>);
-}
-
 /// A class which mocks [IClientRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIClientRepository extends _i1.Mock implements _i6.IClientRepository {
+class MockIClientRepository extends _i1.Mock implements _i4.IClientRepository {
   MockIClientRepository() {
     _i1.throwOnMissingStub(this);
   }
@@ -178,6 +118,66 @@ class MockIClientRepository extends _i1.Mock implements _i6.IClientRepository {
           ),
         )),
       ) as _i5.Future<_i2.Client>);
+}
+
+/// A class which mocks [IClientDataSource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockIClientDataSource extends _i1.Mock implements _i6.IClientDataSource {
+  MockIClientDataSource() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<List<_i2.Client>> getClients() => (super.noSuchMethod(
+        Invocation.method(
+          #getClients,
+          [],
+        ),
+        returnValue: _i5.Future<List<_i2.Client>>.value(<_i2.Client>[]),
+      ) as _i5.Future<List<_i2.Client>>);
+
+  @override
+  _i5.Future<_i2.Client> getClientById(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #getClientById,
+          [id],
+        ),
+        returnValue: _i5.Future<_i2.Client>.value(_FakeClient_0(
+          this,
+          Invocation.method(
+            #getClientById,
+            [id],
+          ),
+        )),
+      ) as _i5.Future<_i2.Client>);
+
+  @override
+  _i5.Future<bool> addClient(_i2.Client? client) => (super.noSuchMethod(
+        Invocation.method(
+          #addClient,
+          [client],
+        ),
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
+
+  @override
+  _i5.Future<bool> updateClient(_i2.Client? client) => (super.noSuchMethod(
+        Invocation.method(
+          #updateClient,
+          [client],
+        ),
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
+
+  @override
+  _i5.Future<bool> deleteClient(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteClient,
+          [id],
+        ),
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 }
 
 /// A class which mocks [Client].

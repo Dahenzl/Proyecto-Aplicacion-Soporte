@@ -5,18 +5,26 @@ import '../../../domain/models/support_user.dart';
 import 'package:http/http.dart' as http;
 
 class AuthenticationDataSource implements IAuthenticationDataSource{
+  final http.Client httpClient;
+
+  AuthenticationDataSource({http.Client? client})
+      : httpClient = client ?? http.Client();
+
   @override
   Future<List<SupportUser>> getSupportUsers() async {
     logError("Web service: getting support users...");
 
-    final requestUri = Uri.parse("https://retoolapi.dev/tRq1YZ/support")
-        .replace(queryParameters: {"format": 'json'});
-    final response = await http.get(requestUri);
+    final response = await httpClient.get(
+      Uri.parse("https://retoolapi.dev/tRq1YZ/support"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       final List<SupportUser> supportUsers =
-          data.map((x) => SupportUser.fromJson(x)).toList();
+          data.skip(1).map((x) => SupportUser.fromJson(x)).toList();
       logInfo("Web service: support users retrieved successfully.");
       return supportUsers;
     } else {

@@ -11,10 +11,10 @@ import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i8;
 import 'package:proyecto_aplicacion_soporte/data/datasources/remote/i_report_datasource.dart'
-    as _i3;
+    as _i6;
 import 'package:proyecto_aplicacion_soporte/domain/models/report.dart' as _i5;
 import 'package:proyecto_aplicacion_soporte/domain/repositories/i_report_repository.dart'
-    as _i6;
+    as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -50,11 +50,11 @@ class _FakeStreamedResponse_1 extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [IReportDataSource].
+/// A class which mocks [IReportRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIReportDataSource extends _i1.Mock implements _i3.IReportDataSource {
-  MockIReportDataSource() {
+class MockIReportRepository extends _i1.Mock implements _i3.IReportRepository {
+  MockIReportRepository() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -95,11 +95,11 @@ class MockIReportDataSource extends _i1.Mock implements _i3.IReportDataSource {
       ) as _i4.Future<bool>);
 }
 
-/// A class which mocks [IReportRepository].
+/// A class which mocks [IReportDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIReportRepository extends _i1.Mock implements _i6.IReportRepository {
-  MockIReportRepository() {
+class MockIReportDataSource extends _i1.Mock implements _i6.IReportDataSource {
+  MockIReportDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -108,6 +108,16 @@ class MockIReportRepository extends _i1.Mock implements _i6.IReportRepository {
         Invocation.method(
           #getReports,
           [],
+        ),
+        returnValue: _i4.Future<List<_i5.Report>>.value(<_i5.Report>[]),
+      ) as _i4.Future<List<_i5.Report>>);
+
+  @override
+  _i4.Future<List<_i5.Report>> getReportsBySupportId(int? supportId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getReportsBySupportId,
+          [supportId],
         ),
         returnValue: _i4.Future<List<_i5.Report>>.value(<_i5.Report>[]),
       ) as _i4.Future<List<_i5.Report>>);
