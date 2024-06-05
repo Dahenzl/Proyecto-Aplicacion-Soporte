@@ -13,4 +13,6 @@ abstract class IClientRepository {
   Future<bool> updateClient(Client client);
 
   Future<bool> deleteClient(int id);
+
+  Future<Client> getClientById(int id);
 }

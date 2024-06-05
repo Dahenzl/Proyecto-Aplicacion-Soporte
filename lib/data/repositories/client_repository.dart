@@ -18,4 +18,8 @@ class ClientRepository implements IClientRepository {
   @override
   Future<bool> deleteClient(int id) async =>
       await _clientDatatasource.deleteClient(id);
+
+  @override
+  Future<Client> getClientById(int id) async =>
+      await _clientDatatasource.getClientById(id);
 }

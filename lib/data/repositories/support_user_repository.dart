@@ -18,4 +18,8 @@ class SupportUserRepository implements ISupportUserRepository {
   @override
   Future<bool> deleteSupportUser(int id) async =>
       await _supportUserDatatasource.deleteSupportUser(id);
+
+  @override
+  Future<SupportUser> getSupportUserById(int id) async =>
+      await _supportUserDatatasource.getSupportUserById(id);
 }

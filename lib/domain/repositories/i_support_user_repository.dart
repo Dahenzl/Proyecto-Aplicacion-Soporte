@@ -13,4 +13,6 @@ abstract class ISupportUserRepository {
   Future<bool> updateSupportUser(SupportUser supportUser);
 
   Future<bool> deleteSupportUser(int id);
+
+  Future<SupportUser> getSupportUserById(int id);
 }

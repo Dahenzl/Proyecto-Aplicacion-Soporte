@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_aplicacion_soporte/domain/models/client.dart';
 import 'package:proyecto_aplicacion_soporte/domain/models/report.dart';
+import 'package:proyecto_aplicacion_soporte/domain/models/support_user.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller.dart';
 
 class ViewReport extends StatefulWidget {
@@ -17,12 +19,14 @@ class _ViewReportState extends State<ViewReport> {
   @override
   Widget build(BuildContext context) {
     CoordinatorController coordinatorController = Get.find();
+    Client objClient = coordinatorController.getClientById(report.userId);
+    SupportUser objSupport = coordinatorController.getSupportById(report.supportId);
     String title = report.title;
     String description = report.description;
-    int date = report.startTime;
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(report.startTime);
     int minutes = report.duration;
-    String client = "${report.userId} ${report.userId}";
-    String support = "${report.supportId} ${report.supportId}";
+    String client = "${objClient.firstName} ${objClient.lastName}";
+    String support = "${objSupport.firstName} ${objSupport.lastName}";
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +51,7 @@ class _ViewReportState extends State<ViewReport> {
               height: 20,
             ),
             Text(
-              "Date:\n${date}/${date}/${date} - ${date}:${date}",
+              "Date:\n${date.day}/${date.month}/${date.year} - ${date.hour}:${date.minute}",
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(
