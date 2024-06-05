@@ -28,6 +28,7 @@ import 'domain/use_case/report_usecase.dart';
 import 'data/datasources/remote/support_user_datasource.dart';
 import 'data/repositories/support_user_repository.dart';
 import 'domain/use_case/support_user_usecase.dart';
+import 'ui/pages/support/reports/report_work.dart';
 
 void main() {
   Loggy.initLoggy(
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(),
+      home: const SendReports(),
     );
   }
 }

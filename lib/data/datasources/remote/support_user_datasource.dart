@@ -106,7 +106,6 @@ class SupportUserDataSource implements ISupportUserDataSource {
   Future<bool> updateSupportUser(SupportUser supportUser) async {
     logInfo("Web service: Updating support user...");
 
-
     final user = await getSupportUserById(supportUser.id);
 
     if (user.email != supportUser.email) {
