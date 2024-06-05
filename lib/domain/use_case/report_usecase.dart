@@ -14,4 +14,7 @@ class ReportUseCase {
       await _repository.updateReport(report);
 
   Future<bool> deleteReport(int id) async => await _repository.deleteReport(id);
+
+  Future<List<Report>> getReportsBySupportId(int supportId) async =>
+      await _repository.getReportsBySupportId(supportId);
 }

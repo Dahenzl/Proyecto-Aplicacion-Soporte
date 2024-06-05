@@ -99,4 +99,15 @@ class ReportDataSource implements IReportDataSource {
       return Future.value(false);
     }
   }
+
+  @override
+  Future<List<Report>> getReportsBySupportId(int supportId) async {
+    logInfo("Web service: getting reports by support id...");
+
+    final currentReports = await getReports();
+
+    List<Report> filteredReports = currentReports.where((report) => report.supportId == supportId).toList();
+
+    return Future.value(filteredReports);
+  }
 }

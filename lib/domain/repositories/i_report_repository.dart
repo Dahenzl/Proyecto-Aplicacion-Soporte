@@ -13,4 +13,6 @@ abstract class IReportRepository {
   Future<bool> updateReport(Report report);
 
   Future<bool> deleteReport(int id);
+
+  Future<List<Report>> getReportsBySupportId(int supportId);
 }

@@ -19,4 +19,8 @@ class ReportRepository implements IReportRepository {
   @override
   Future<bool> deleteReport(int id) async =>
       await _reportDatatasource.deleteReport(id);
+
+  @override
+  Future<List<Report>> getReportsBySupportId(int supportId) async =>
+      await _reportDatatasource.getReportsBySupportId(supportId);
 }

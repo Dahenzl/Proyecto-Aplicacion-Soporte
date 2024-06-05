@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
 import 'package:proyecto_aplicacion_soporte/domain/models/client.dart';
 import 'package:proyecto_aplicacion_soporte/domain/models/report.dart';
 import 'package:proyecto_aplicacion_soporte/domain/models/support_user.dart';
-import 'package:proyecto_aplicacion_soporte/ui/controller/coordinator_controller.dart';
+import 'package:proyecto_aplicacion_soporte/ui/controller/support_controller.dart';
 
-class ViewReport extends StatefulWidget {
-  const ViewReport({super.key});
+class ViewMyReport extends StatefulWidget {
+  const ViewMyReport({super.key});
 
   @override
-  State<ViewReport> createState() => _ViewReportState();
+  State<ViewMyReport> createState() => _ViewMyReportState();
 }
 
-class _ViewReportState extends State<ViewReport> {
+class _ViewMyReportState extends State<ViewMyReport> {
   late Future<void> _future;
   late Report report;
   late String title = "";
@@ -34,7 +33,7 @@ class _ViewReportState extends State<ViewReport> {
   }
 
   Future<void> _initializeData() async {
-    CoordinatorController coordinatorController = Get.find();
+    SupportController supportController = Get.find();
     setState(() {
       date = DateTime.fromMillisecondsSinceEpoch(report.startTime);
       minutes = report.duration;
@@ -44,7 +43,7 @@ class _ViewReportState extends State<ViewReport> {
     });
     try {
       Client objClient =
-          await coordinatorController.getClientById(report.userId);
+          await supportController.getClientById(report.userId);
 
       setState(() {
         client = "${objClient.firstName} ${objClient.lastName}";
@@ -57,7 +56,7 @@ class _ViewReportState extends State<ViewReport> {
     }
     try {
       SupportUser objSupport =
-          await coordinatorController.getSupportById(report.supportId);
+          await supportController.getSupportById(report.supportId);
       setState(() {
         support = "${objSupport.firstName} ${objSupport.lastName}";
       });
@@ -85,7 +84,7 @@ class _ViewReportState extends State<ViewReport> {
               child:
                   CircularProgressIndicator()) // Show loading indicator while data is loading
           : SingleChildScrollView(
-              child: Padding(
+            child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -120,26 +119,15 @@ class _ViewReportState extends State<ViewReport> {
                         Icons.star,
                         color: Colors.amber,
                       ),
-                      onRatingUpdate: (newRating) async {
-                        setState(() {
-                          rating = newRating;
-                        });
-                        CoordinatorController coordinatorController =
-                            Get.find();
-                        report.rating = newRating;
-                        logInfo("Updating report rating to ${report.id}");
-                        await coordinatorController.updateReport(report);
-                        Get.snackbar("Success",
-                            "Rating updated successfully to $newRating stars",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.green,
-                            colorText: Colors.white);
+                      ignoreGestures: true,
+                      onRatingUpdate: (rating) {
+               
                       },
                     ),
                   ],
                 ),
               ),
-            ),
+          ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:proyecto_aplicacion_soporte/domain/models/support_user.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/authentication_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/controller/support_controller.dart';
 import 'package:proyecto_aplicacion_soporte/ui/pages/authentication/login_page.dart';
+import 'package:proyecto_aplicacion_soporte/ui/pages/support/reports/my_reports.dart';
 import 'reports/report_work.dart';
 
 class SupportMain extends StatefulWidget {
@@ -53,39 +54,60 @@ class _SupportMainState extends State<SupportMain> {
             return const Center(child: Text('Support user not found'));
           } else {
             SupportUser supportUser = snapshot.data!;
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Welcome Back Support ${supportUser.firstName} ${supportUser.lastName}!",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  const SizedBox(height: 20),
-                  const Icon(
-                    Icons.supervised_user_circle,
-                    size: 200,
-                    color: Colors.blue,
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 30),
-                      textStyle: const TextStyle(fontSize: 25),
+            return SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Welcome Back Support ${supportUser.firstName} ${supportUser.lastName}!",
+                      style: const TextStyle(fontSize: 30),
+                      textAlign: TextAlign.center,
                     ),
-                    onPressed: () {
-                      logInfo("Going to Reports");
-                      Get.to(() => SendReports(supportId: widget.id));
-                    },
-                    child: const Text("Report Work"),
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    const Icon(
+                      Icons.supervised_user_circle,
+                      size: 200,
+                      color: Colors.blue,
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 30),
+                        textStyle: const TextStyle(fontSize: 25),
+                      ),
+                      onPressed: () {
+                        logInfo("Going to Reports");
+                        Get.to(() => SendReports(supportId: widget.id));
+                      },
+                      child: const Text("Report Work"),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 30),
+                        textStyle: const TextStyle(fontSize: 25),
+                      ),
+                      onPressed: () {
+                        logInfo("Going to My Reports");
+                        Get.to(() => MyReports(id: widget.id));
+                      },
+                      child: const Text("My reports"),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             );
           }
