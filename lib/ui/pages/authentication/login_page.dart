@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:proyecto_aplicacion_soporte/domain/models/support_user.dart';
 import 'package:proyecto_aplicacion_soporte/ui/pages/coordinator/coordinator_main.dart';
 import 'package:proyecto_aplicacion_soporte/ui/pages/support/support_main.dart';
 import '../../controller/authentication_controller.dart';
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
             icon: const Icon(Icons.person, color: Colors.green),
             snackPosition: SnackPosition.BOTTOM,
           );
-          Get.off(() => SupportMain(email: theEmail));
+          Get.off(() => SupportMain(id: value.$1));
         } 
       });
     } catch (err) {

@@ -18,6 +18,7 @@ class _SupportsMenuState extends State<SupportsMenu> {
 
   @override
   Widget build(BuildContext context) {
+    coordinatorController.getSupports();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Support List"),

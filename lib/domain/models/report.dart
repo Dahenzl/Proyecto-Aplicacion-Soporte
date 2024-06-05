@@ -26,7 +26,7 @@ class Report {
     id: json["id"],
     rating: json["rating"],
     title: json["title"],
-    description: json["email"],
+    description: json["description"],
     startTime: json["start_time"],
     duration: json["duration"],
     userId: json["user_id"],
@@ -37,11 +37,10 @@ class Report {
     "id": id,
     "rating": rating,
     "title": title,
-    "email": description,
+    "description": description,
     "start_time": startTime,
     "duration": duration,
     "user_id": userId,
     "support_id": supportId,
   };
-
 }

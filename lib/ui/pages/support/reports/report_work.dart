@@ -5,7 +5,8 @@ import 'package:drop_down_list/model/selected_list_item.dart';
 import '../../../controller/support_controller.dart';
 
 class SendReports extends StatefulWidget {
-  const SendReports({Key? key}) : super(key: key);
+  final int supportId;
+  const SendReports({super.key, required this.supportId});
 
   @override
   _SendReportsState createState() => _SendReportsState();
@@ -14,6 +15,7 @@ class SendReports extends StatefulWidget {
 class _SendReportsState extends State<SendReports> {
   final SupportController _controller = SupportController();
 
+  int clientId = -1;
   final TextEditingController userController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -49,12 +51,14 @@ class _SendReportsState extends State<SendReports> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
+      lastDate: DateTime.now(),
     );
     if (pickedDate != null) {
+      // ignore: use_build_context_synchronously
       final TimeOfDay? pickedTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
+
       );
       if (pickedTime != null) {
         setState(() {
@@ -114,8 +118,8 @@ class _SendReportsState extends State<SendReports> {
                                 description: descriptionController.text,
                                 startTime: _selectedDateTime!.millisecondsSinceEpoch,
                                 duration: int.parse(timeLapseController.text),
-                                userId: int.parse(userController.text),
-                                supportId: 1, // Assuming current support user ID is 1
+                                userId: clientId,
+                                supportId: widget.supportId, // Assuming current support user ID is 1
                               );
                               Get.back();
                             }
@@ -249,12 +253,13 @@ class _SendReportsState extends State<SendReports> {
         ),
       ),
       data: _controller.clients.map((client) {
-        return SelectedListItem(value: client.id.toString(), name: client.id.toString());
+        return SelectedListItem(value: client.id.toString(), name: '${client.firstName} ${client.lastName}');
       }).toList(),
       selectedItems: (List<dynamic> selectedList) {
         if (selectedList.isNotEmpty && selectedList[0] is SelectedListItem) {
           final SelectedListItem selectedItem = selectedList[0];
           userController.text = selectedItem.name;
+          clientId = int.parse(selectedItem.value.toString());
         }
       },
       enableMultipleSelection: false,

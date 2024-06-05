@@ -15,17 +15,34 @@ class ClientsMenu extends StatefulWidget {
 }
 
 class _ClientsMenuState extends State<ClientsMenu> {
+  bool isLoading = true;
   CoordinatorController coordinatorController = Get.find();
 
   @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    await coordinatorController.getClients();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    coordinatorController.getClients();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Clients List"),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
-      body: Center(child: _getXlistView()),
+      body: isLoading
+      ? const Center(child: CircularProgressIndicator())
+      : Center(child: _getXlistView()),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           logInfo("Add user from UI");

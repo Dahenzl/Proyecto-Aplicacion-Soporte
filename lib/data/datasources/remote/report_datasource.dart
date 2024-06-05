@@ -64,7 +64,7 @@ class ReportDataSource implements IReportDataSource {
     logInfo("Web service: Updating report...");
 
     final response = await httpClient.put(
-      Uri.parse("https://retoolapi.dev/$apiKey/reports"),
+      Uri.parse("https://retoolapi.dev/$apiKey/reports/${report.id}"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

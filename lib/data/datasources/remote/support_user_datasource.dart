@@ -141,7 +141,7 @@ class SupportUserDataSource implements ISupportUserDataSource {
     logInfo("Web service: Deleting support user...");
 
     final response = await httpClient.delete(
-      Uri.parse("https://retoolapi.dev/$apiKey/users/$id"),
+      Uri.parse("https://retoolapi.dev/$apiKey/support/$id"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

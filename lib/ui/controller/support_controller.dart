@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:proyecto_aplicacion_soporte/domain/use_case/support_user_usecase.dart';
 import '../../domain/models/client.dart';
 import '../../domain/models/report.dart';
 import '../../domain/use_case/client_usecase.dart';
@@ -9,6 +10,7 @@ class SupportController extends GetxController {
   final RxList<Client> clients = <Client>[].obs;
   final ClientUseCase clientUseCase = Get.find();
   final ReportUseCase reportUseCase = Get.find();
+  final SupportUserUseCase supportUserUseCase = Get.find();
 
   @override
   void onInit() {
@@ -49,5 +51,10 @@ class SupportController extends GetxController {
     } catch (e) {
       logError('Failed to create report: $e');
     }
+  }
+
+  getSupportById(int id) async {
+    logInfo("Getting support by id");
+    return await supportUserUseCase.getSupportUserById(id);
   }
 }

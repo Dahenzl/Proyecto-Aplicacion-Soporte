@@ -17,14 +17,6 @@ class CoordinatorController extends GetxController {
   final SupportUserUseCase supportUserUseCase = Get.find();
   final ReportUseCase reportUseCase = Get.find();
 
-  @override
-  void onInit() {
-    getClients();
-    getSupports();
-    getReports();
-    super.onInit();
-  }
-
   getClients() async {
     logInfo("Getting clients");
     clients.value = await clientUseCase.getClients();
@@ -58,7 +50,7 @@ class CoordinatorController extends GetxController {
     int newId = clients.isNotEmpty ? clients.last.id + 1 : 1;
     await clientUseCase.addClient(Client(
         id: newId, firstName: firstName, lastName: lastName, email: email));
-    getClients();
+    await getClients();
   }
 
   addSupport(String firstName, String lastName, String email, String password) async {
@@ -68,53 +60,39 @@ class CoordinatorController extends GetxController {
         lastName: lastName,
         email: email,
         password: password));
-    getSupports();
+    await getSupports();
   }
 
   updateClient(Client client) async {
     logInfo("Update client");
     await clientUseCase.updateClient(client);
-    getClients();
+    await getClients();
   }
 
   updateSupport(SupportUser support) async {
     logInfo("Update support");
     await supportUserUseCase.updateSupportUser(support);
-    getSupports();
+    await getSupports();
   }
 
   deleteClient(int id) async {
     logInfo("Delete client");
     await clientUseCase.deleteClient(id);
-    getClients();
+    await getClients();
   }
 
   deleteSupport(int id) async {
     logInfo("Delete support");
     await supportUserUseCase.deleteSupportUser(id);
-    getSupports();
+    await getSupports();
   }
-
-
-  // void rateReport(int id, double rating) {
-  //   logInfo("Rate report");
-  //   int index = reports.indexWhere((report) => report.id == id);
-  //   if (index != -1) {
-  //     Report updatedReport = reports[index];
-  //     updatedReport.rating =
-  //         rating; // Suponiendo que tienes un método copyWith en tu modelo Report
-  //     reports[index] = updatedReport;
-  //   }
-  // }
 
   Future<void> updateReport(Report report) async {
     logInfo("Update report");
     int index = reports.indexWhere((r) => r.id == report.id);
     if (index != -1) {
       await reportUseCase.updateReport(report);
-      getReports();
+      await getReports();
     }
   }
-
-
 }
