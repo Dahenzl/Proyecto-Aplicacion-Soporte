@@ -58,7 +58,6 @@ class _SendReportsState extends State<SendReports> {
       final TimeOfDay? pickedTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
-
       );
       if (pickedTime != null) {
         setState(() {
@@ -93,15 +92,23 @@ class _SendReportsState extends State<SendReports> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 20.0),
-                      _buildTextField('Client', 'Select a client', userController, true),
+                      _buildTextField(
+                          'Client', 'Select a client', userController, true),
                       const SizedBox(height: 20.0),
-                      _buildTextField('Title', 'Enter the title', titleController, false),
+                      _buildTextField(
+                          'Title', 'Enter the title', titleController, false),
                       const SizedBox(height: 20.0),
-                      _buildTextField('Description', 'Enter the description', descriptionController, false, maxLines: 5),
+                      _buildTextField('Description', 'Enter the description',
+                          descriptionController, false,
+                          maxLines: 5),
                       const SizedBox(height: 20.0),
                       _buildDateTimeField(),
                       const SizedBox(height: 20.0),
-                      _buildTextField('Duration', 'Enter the duration (minutes)', timeLapseController, false),
+                      _buildTextField(
+                          'Duration',
+                          'Enter the duration (minutes)',
+                          timeLapseController,
+                          false),
                       const SizedBox(height: 20.0),
                       if (errorMessage != null)
                         Text(
@@ -116,12 +123,15 @@ class _SendReportsState extends State<SendReports> {
                               _controller.createReport(
                                 title: titleController.text,
                                 description: descriptionController.text,
-                                startTime: _selectedDateTime!.millisecondsSinceEpoch,
+                                startTime:
+                                    _selectedDateTime!.millisecondsSinceEpoch,
                                 duration: int.parse(timeLapseController.text),
                                 userId: clientId,
-                                supportId: widget.supportId, // Assuming current support user ID is 1
+                                supportId: widget
+                                    .supportId, // Assuming current support user ID is 1
                               );
                               Get.back();
+                              Get.snackbar("Success", "Report sent successfully!", backgroundColor: Colors.green, colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -130,13 +140,13 @@ class _SendReportsState extends State<SendReports> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 15),
                             textStyle: const TextStyle(fontSize: 20),
                           ),
                           child: const Text('Send'),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -145,7 +155,9 @@ class _SendReportsState extends State<SendReports> {
     );
   }
 
-  Widget _buildTextField(String title, String hint, TextEditingController controller, bool isDropDown, {int maxLines = 1}) {
+  Widget _buildTextField(String title, String hint,
+      TextEditingController controller, bool isDropDown,
+      {int maxLines = 1}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -167,7 +179,8 @@ class _SendReportsState extends State<SendReports> {
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.black12,
-            contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
             hintText: hint,
             border: const OutlineInputBorder(
               borderSide: BorderSide.none,
@@ -208,7 +221,8 @@ class _SendReportsState extends State<SendReports> {
             decoration: const InputDecoration(
               filled: true,
               fillColor: Colors.black12,
-              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -232,40 +246,40 @@ class _SendReportsState extends State<SendReports> {
   }
 
   void _onTextFieldTap() {
-  if (_controller.clients.isEmpty) {
-    _controller.fetchClients();
+    if (_controller.clients.isEmpty) {
+      _controller.fetchClients();
+    }
+    DropDownState(
+      DropDown(
+        isDismissible: true,
+        bottomSheetTitle: const Text(
+          'Users',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0,
+          ),
+        ),
+        submitButtonChild: const Text(
+          'Done',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        data: _controller.clients.map((client) {
+          return SelectedListItem(
+              value: client.id.toString(),
+              name: '${client.firstName} ${client.lastName}');
+        }).toList(),
+        selectedItems: (List<dynamic> selectedList) {
+          if (selectedList.isNotEmpty && selectedList[0] is SelectedListItem) {
+            final SelectedListItem selectedItem = selectedList[0];
+            userController.text = selectedItem.name;
+            clientId = int.parse(selectedItem.value.toString());
+          }
+        },
+        enableMultipleSelection: false,
+      ),
+    ).showModal(context);
   }
-  DropDownState(
-    DropDown(
-      isDismissible: true,
-      bottomSheetTitle: const Text(
-        'Users',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20.0,
-        ),
-      ),
-      submitButtonChild: const Text(
-        'Done',
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      data: _controller.clients.map((client) {
-        return SelectedListItem(value: client.id.toString(), name: '${client.firstName} ${client.lastName}');
-      }).toList(),
-      selectedItems: (List<dynamic> selectedList) {
-        if (selectedList.isNotEmpty && selectedList[0] is SelectedListItem) {
-          final SelectedListItem selectedItem = selectedList[0];
-          userController.text = selectedItem.name;
-          clientId = int.parse(selectedItem.value.toString());
-        }
-      },
-      enableMultipleSelection: false,
-    ),
-  ).showModal(context);
-}
-
-
 }

@@ -52,7 +52,7 @@ class _ViewReportState extends State<ViewReport> {
     } catch (error) {
       // Handle any errors here
       setState(() {
-        client = "Usuario de Cliente eliminado";
+        client = "Client deleted";
       });
     }
     try {
@@ -64,7 +64,7 @@ class _ViewReportState extends State<ViewReport> {
     } catch (error) {
       // Handle any errors here
       setState(() {
-        support = "Usuario de Soporte eliminado";
+        support = "Support User deleted";
       });
     }
     setState(() {

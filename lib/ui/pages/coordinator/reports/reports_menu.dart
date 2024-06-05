@@ -58,7 +58,7 @@ class _ReportsMenuState extends State<ReportsMenu> {
                 key: UniqueKey(),
                 child: ListTile(
                   title: Text(report.title),
-                  subtitle: const Text("Cargando..."),
+                  subtitle: const Text("Charge in progress..."),
                   onTap: () {
                     logInfo("Going to view report ${report.id}");
                     Get.to(() => const ViewReport(), arguments: [report, report.id]);
@@ -70,7 +70,7 @@ class _ReportsMenuState extends State<ReportsMenu> {
                 key: UniqueKey(),
                 child: ListTile(
                   title: Text(report.title),
-                  subtitle: const Text("Usuario de Soporte eliminado"),
+                  subtitle: const Text("Support User deleted."),
                   onTap: () {
                     logInfo("Going to view report ${report.id}");
                     Get.to(() => const ViewReport(), arguments: [report, report.id]);
